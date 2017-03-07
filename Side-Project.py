@@ -12,12 +12,16 @@ t3x3=[[0,0,0],\
       [0,0,0],\
       [0,0,0]]
 
-defult_table=[[0,0,0],\
-              [0,8,0],\
-              [0,0,0]]
-
+defult_table=[[0, 0, 0, 0, 0, 0],\
+              [0, 8.0, 0, 0, 0, 0],\
+              [0, 0, 336, 0, 0, 0],\
+              [0, 0, 0, 0, 0, 0],\
+              [0, 0, 0, 0, 0, 0],\
+              [0, 0, 0, 0, 0, 0]]
+              
 dtrt = 2 #<<-- number of decimals to round the printed values
 
+threshold = 42 #<<-- must be an int
 
 ##------rules go in here------##
 
@@ -26,6 +30,7 @@ def rule1(table,row,column,value):
     if value > 0:
         table[row][column] = value - 1
 
+#radiates an 8th of a cells energy to adjacent cells (unless it equals threshold) 
 def energy_rule(new,row,column,old):
     new_value=0
     len_row = len(old)
@@ -35,10 +40,22 @@ def energy_rule(new,row,column,old):
             if [i,j] != [0,0]:
                 edit_row = (row + i) % len_row
                 edit_column = (column + j) % len_column
-                temp = old[edit_row][edit_column]
-                new_value += old[edit_row][edit_column]               
+                if rule42(old[edit_row][edit_column]): #<-rule42 check needed here
+                    new_value += old[row][column]
+                else:
+                    temp = old[edit_row][edit_column]
+                    new_value += old[edit_row][edit_column]                    
     new[row][column] = new_value / 8
-    return
+    return new_value / 8
+
+#if a cell has an integer of threshold, it will not radiate energy and ajacent 
+# cells will get an 8th of it's energy back (i.e. energy gets bounced back)
+def rule42(value):
+    if round(value) == threshold:
+        return True
+    else:
+        return False
+        
 
 
 ##--helper functions go here---##
@@ -50,7 +67,10 @@ def next_generation(table):
         for j in range(0,len(table[0])): 
             #rules go in here ## <<-----------           
             value = table[i][j]
-            energy_rule(next_table,i,j,table)                    
+            if not rule42(value):               
+                new_value = energy_rule(next_table,i,j,table)
+            else:
+                pass
     return next_table
 
 #takes x and y and outputs a blank table with x rows and y columns
