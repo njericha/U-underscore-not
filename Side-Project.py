@@ -4,7 +4,9 @@
 # import random 
 # random.randrange(a, b) this outputs an integer between [a, b) 
 
-import random 
+import random
+
+import classes as cl
 
 ##----rules toggle go here----##
 
@@ -23,6 +25,13 @@ defult_table=[[0.0, 0.0, 0.0, 0.0, 0.0, 0.0],\
               [0.0, 0.0, 0.0, 0.0, 0.0, 0.0],\
               [0.0, 0.0, 0.0, 0.0, 0.0, 0.0],\
               [0.0, 0.0, 0.0, 0.0, 0.0, 0.0]]
+
+defult_table1=[[0.0, 42, 0.0, 0.0, 42, 0.0],\
+              [42.0, 42, 0.0, 0.0, 42, 42],\
+              [0.0, 0.0, 336, 0.0, 0.0, 0.0],\
+              [0.0, 0.0, 0.0, 0.0, 0.0, 0.0],\
+              [42, 42, 0.0, 0.0, 42, 42],\
+              [8, 42, 0.0, 0.0, 42, 0.0]]
               
 dtrt = 2 #<<-- number of decimals to round the printed values
 
@@ -149,8 +158,8 @@ def table_builder():
         okay = input("Would you like to change an initial state? ('y' or 'n'): ")
         if okay == 'n':
             break            
-        row = int(input("Enter a row to edit: ")) - 1
-        column = int(input("Enter a column to edit: ")) - 1
+        row = int(input("Enter a row to edit: "))
+        column = int(input("Enter a column to edit: "))
         value = int(input("Enter a value: "))
         tablecopy = table_copy(table)
         change_table(tablecopy,row,column,value)
@@ -177,7 +186,5 @@ def U0():
         n += 1
     input("End")
     return None
-
-
 
 U0()

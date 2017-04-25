@@ -13,10 +13,10 @@
 
 
 # Rule 42: 
-# if a cell has energy value = to thresh hold value then it does not absorbe 
+# if a cell has energy value = to thresh hold value then it does not absorb
 # nor distribute energy. (we can use this to make closed shapes, and tunnels)
 
-# Let there exist two types of objects: 
+# There exists two types of objects: 
 # these objects exist as additional functions which only appear on certain cells
 # these functions are distributed by the user when setting the initial state
 #    "Absorber": This cell has a function A(t) which randomly chooses an 
